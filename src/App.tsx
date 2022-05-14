@@ -4,6 +4,7 @@ import "./App.css"
 import {BingoSquare} from "./components/bingo-square";
 import {BoardState, newBingo, update} from "./helper-functios";
 import cloneDeep from "lodash/cloneDeep"
+import {BingoAlert} from "./components/bingo-alert";
 function App() {
 
     const [boardState, setBoardState] = useState<BoardState>(newBingo())
@@ -23,13 +24,14 @@ function App() {
                 Bingo
             </header>
 
-            {showBingoOverlay && (<>BINGO</>)}
 
             <Grid>
                 {boardState.squares.map((value, index) =>
                     <BingoSquare active={value.active} text={value.text}
                                  onClick={activateSquare(index)}/>)}
             </Grid>
+            {showBingoOverlay && <BingoAlert open={showBingoOverlay} onClick={() => setShowBingoOverlay(false)}/>}
+
         </div>
     );
 }

@@ -7,7 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.3rem;
+    font-size: 2.5vw;
     cursor: pointer;
     user-select: none;
 }
@@ -25,22 +25,29 @@
 }
 
 span {
-    border-radius: 10000px;
-    background-color: white;
-    padding: 0 1rem;
+    border-radius: 10px;
+    max-width: calc(100%);
+    max-height: calc(100%);
+    font-weight: bold;
+    color: whitesmoke;
+    text-align: center;
 }
 .square:hover > * {
     filter: brightness(1.1);
     width: 100%;
     height: 100%;
-    font-size: 1.8rem;
 }
 
 .square:active > * {
     filter: brightness(0.8);
     width: 90%;
     height: 90%;
-    font-size: 1rem;
+}
+
+.active span {
+    mix-blend-mode: multiply;
+    color: deeppink;
+    text-shadow: 2px 2px 1.8px white;
 }
 
 .active {

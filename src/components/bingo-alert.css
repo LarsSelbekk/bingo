@@ -1,0 +1,53 @@
+.container {
+
+    border-radius: 100000px;
+    padding: calc(4rem + 10px) 200px;
+}
+
+.container-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    font-size: 4rem;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    color: white;
+    display: flex;
+    flex-direction: row;
+}
+
+.bouncing {
+    animation: bouncing 2s linear infinite;
+    animation-direction: normal;
+    margin-right: 2px;
+}
+
+@keyframes bouncing {
+    0% {transform: rotate(-30deg);
+    font-size: 4rem;
+        color: red;
+    }
+
+    33% {transform: rotate3d(1,1,1,-360deg);
+        font-size: 6rem;
+
+        color: yellow;}
+    66% {transform: rotate(30deg);
+        font-size: 4rem;
+
+        color: green;}
+    100% {transform: rotate(-30deg);
+        font-size: 4rem;
+        color: red;
+    }
+
+}
