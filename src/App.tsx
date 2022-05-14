@@ -87,14 +87,15 @@ function App() {
             </header>
 
             <ButtonGroup>
-                <Button className={"button"} variant="secondary"
+                <Button className={"button"} variant="primary"
                         onClick={() => setShowBingoGrid(!showBingoGrid)}>{showBingoGrid ? "View Scores" : "View Bingo"}</Button>
-                <Button variant="secondary" onClick={() => {
+                <Button variant="warning" onClick={() => {
                     setBoardState(newBingo());
                     setSongs(loadSongs());
                     setShowBingoGrid(true);
                 }}>Reset</Button>
             </ButtonGroup>
+
             {showBingoGrid ? (<Grid>
                     {boardState?.squares.map((value, index) =>
                         <BingoSquare active={value.active} text={value.text} key={value.text}
