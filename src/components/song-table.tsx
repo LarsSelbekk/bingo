@@ -28,6 +28,9 @@ const Song = ({artist, country, onChange, song, songScore, sceneScore, originalS
         <td>
             <input defaultValue={originalScore} onBlur={onChange("original")}  type={"number"}  min={0} max={10} step={0.1}/>
         </td>
+        <td>
+            {(songScore || 0)+(sceneScore || 0)+(originalScore || 0)}
+        </td>
     </tr>
 }
 export const SongTable = ({songs, updateScore}: Props) => {
@@ -40,6 +43,7 @@ export const SongTable = ({songs, updateScore}: Props) => {
         <th>song quality</th>
         <th>show quality</th>
         <th>originality</th>
+        <th>sum</th>
         </tr>
         </thead>
         <tbody>
