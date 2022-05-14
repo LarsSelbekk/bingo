@@ -6,42 +6,64 @@ function shuffleArray(arr: any[]) {
 
 function range(start: number, end: number) {
     var ans: number[] = [];
-    for (let i = start; i <= end; i++) {
+    for (let i = start; i < end; i++) {
         ans.push(i);
     }
     return ans;
 }
 
+function zeros(length: number) {
+    return range(0, length).map(() => 0)
+}
 
-type bingoElement = { active: boolean, connectedVertical: boolean, connectedHorizontal: boolean, connectedDiagonal: boolean, text?: string }
+export type BingoElement = { active: boolean, text?: string }
+export type BingoArray = boolean[]
+export type BoardState = { squares: BingoElement[], bingoRows: BingoArray, bingoCols: BingoArray, bingoDiagonals: BingoArray }
 
 const boardSize = 4
-const newBingo = () => {
+
+export const newBingo = (): BoardState => {
     shuffleArray(bingoElements)
-    return bingoElements.slice(0, boardSize * boardSize).map((element: string) => ({
-        active: false,
-        connectedVertical: false,
-        connectedHorizontal: false,
-        connectedDiagonal: false,
-        text: element
-    }))
+    return {
+        squares: bingoElements.slice(0, boardSize * boardSize).map((element: string) => ({
+                active: false,
+                text: element
+            }),
+        ),
+        bingoRows: range(0, boardSize).map(() => false),
+        bingoCols: range(0, boardSize).map(() => false),
+        bingoDiagonals: range(0, 2).map(() => false),
+    }
 }
 
-const update = (elements: bingoElement[]) => {
-    const rows = evaluateRows(elements);
-    const cols = evaluateCols(elements);
 
+const isBingo = (newArr: boolean[], oldArr: boolean[]) => {
+    return oldArr.some((value, index) => newArr[index] && !value)
 }
 
-const evaluateRows = (elements: bingoElement[]) => {
+
+export const update = (state: BoardState): { newState: BoardState; bingo: boolean } => {
+    const rows = evaluateRows(state.squares);
+    const cols = evaluateCols(state.squares);
+    const diags = evaluateDiag(state.squares);
+    const bingo = isBingo(rows, state.bingoRows) || isBingo(cols, state.bingoCols) || isBingo(diags, state.bingoDiagonals)
+
+    return {newState: {squares: state.squares, bingoDiagonals: diags, bingoCols: cols, bingoRows: rows}, bingo}
+}
+
+const evaluateRows = (elements: BingoElement[]) => {
     return elements.reduce((previousValue, currentValue, currentIndex) => {
         if (currentValue.active) previousValue[Math.floor(currentIndex / boardSize)] += 1;
         return previousValue
-    }, range(0, boardSize)).map(value => value/boardSize===1)
+    }, zeros(boardSize).map(() => 0)).map(value => value / boardSize === 1)
 }
-const evaluateCols = (elements: bingoElement[]) => {
+const evaluateCols = (elements: BingoElement[]) => {
     return elements.reduce((previousValue, currentValue, currentIndex) => {
-        if (currentValue.active) previousValue[Math.floor(currentIndex % boardSize)] += 1;
+        if (currentValue.active) previousValue[currentIndex % boardSize] += 1;
         return previousValue
-    }, range(0, boardSize)).map(value => value/boardSize===1)
+    }, zeros(boardSize)).map(value => value / boardSize === 1)
+}
+const evaluateDiag = (elements: BingoElement[]) => {
+    return [range(0, boardSize).every(value => elements[value * boardSize + value].active),
+        range(0, boardSize).every(value => elements[boardSize - value-1 + value * boardSize].active)]
 }

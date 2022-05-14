@@ -1,12 +1,11 @@
 import clsx from "clsx";
 import "./bingo-square.css"
-import {useState} from "react";
+import {BingoElement} from "../helper-functios";
 
-type Props = { active: boolean, connectedVertical: boolean, connectedHorizontal: boolean, text?: string }
+type Props = BingoElement & {onClick: () => void}
 
-export const BingoSquare = ({active, connectedHorizontal, connectedVertical, text}: Props) => {
-    const [active2, setActive] = useState(false)
-    return (<div className={clsx("square")} onClick={() => setActive(!active2)}>
-        <div className={clsx("square-inside", active2 && "active")}><span>{text}</span></div>
+export const BingoSquare = ({active, text, onClick}: Props) => {
+    return (<div className={clsx("square")} onClick={onClick}>
+        <div className={clsx("square-inside", active && "active")}><span>{text}</span></div>
     </div>);
 }
