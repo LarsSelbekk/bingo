@@ -2,8 +2,8 @@
     grid-template-rows: repeat(4, minmax(0, 1fr));
     grid-template-columns: repeat(4, minmax(0, 1fr));
     display: grid;
-    width: calc(min(100vw, 100vh) - 2rem);
-    height: min(100vw, 100vh);
+    width: calc(min(100vw, 80vh) - 2rem);
+    height: min(100vw, 80vh);
 }
 
 .grid-container {

@@ -1,4 +1,6 @@
 import bingoElements from "./data/bingo.json"
+import songs from "./data/songs.json"
+import {buildTimeValue} from "@testing-library/user-event/dist/utils";
 
 function shuffleArray(arr: any[]) {
     arr.sort(() => Math.random() - 0.5);
@@ -66,4 +68,9 @@ const evaluateCols = (elements: BingoElement[]) => {
 const evaluateDiag = (elements: BingoElement[]) => {
     return [range(0, boardSize).every(value => elements[value * boardSize + value].active),
         range(0, boardSize).every(value => elements[boardSize - value-1 + value * boardSize].active)]
+}
+
+export type SongData = {country: string, artist: string, song: string, score?: number}
+export const loadSongs = (): SongData[] => {
+    return songs;
 }
