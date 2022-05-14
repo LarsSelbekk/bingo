@@ -29,11 +29,23 @@ function App() {
         })
     }
 
-    const updateScore = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const updateScore = (index: number) => (mode: string) =>  (event: React.ChangeEvent<HTMLInputElement>) => {
         setSongs(prevState => {
             if (prevState)  {
                 const newState = cloneDeep(prevState)
-                newState[index].score = Number.parseFloat(event.target.value);
+                if (!isNaN(Number.parseFloat(event.target.value))) {
+                    switch (mode) {
+                        case "song":
+                            newState[index].songScore = Number.parseFloat(event.target.value);
+                            break;
+                        case "scene":
+                            newState[index].sceneScore = Number.parseFloat(event.target.value);
+                            break;
+                        case "original":
+                            newState[index].originalScore = Number.parseFloat(event.target.value);
+                            break;
+                    }
+                }
                 return newState;
             }
 
@@ -71,20 +83,21 @@ function App() {
     return (
         <div className="app">
             <header className="header">
-                Bingo
+                Eurovision Bingo & Score card
             </header>
 
             <ButtonGroup>
                 <Button className={"button"} variant="secondary"
-                        onClick={() => setShowBingoGrid(!showBingoGrid)}>Toggle</Button>
+                        onClick={() => setShowBingoGrid(!showBingoGrid)}>{showBingoGrid ? "View Scores" : "View Bingo"}</Button>
                 <Button variant="secondary" onClick={() => {
                     setBoardState(newBingo());
                     setSongs(loadSongs());
-                }}>Reset board</Button>
+                    setShowBingoGrid(true);
+                }}>Reset</Button>
             </ButtonGroup>
             {showBingoGrid ? (<Grid>
                     {boardState?.squares.map((value, index) =>
-                        <BingoSquare active={value.active} text={value.text}
+                        <BingoSquare active={value.active} text={value.text} key={value.text}
                                      onClick={activateSquare(index)}/>)}
                 </Grid>) :
                 (<SongTable songs={songs} updateScore={updateScore}/>)}

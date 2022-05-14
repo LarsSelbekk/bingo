@@ -70,7 +70,8 @@ const evaluateDiag = (elements: BingoElement[]) => {
         range(0, boardSize).every(value => elements[boardSize - value-1 + value * boardSize].active)]
 }
 
-export type SongData = {country: string, artist: string, song: string, score?: number}
+export type SongData = {country: string, artist: string, song: string, songScore?: number, sceneScore?: number, originalScore?: number}
 export const loadSongs = (): SongData[] => {
-    return songs;
+    return songs.map(song => ({...song, songScore: 0, sceneScore: 0, originalScore: 0
+        }));
 }

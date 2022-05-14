@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "data/theme.css";
 
 body {
   margin: 0;
@@ -9,6 +7,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(90deg, var(--color-background-1), var(--color-background-2));
 }
 
 code {

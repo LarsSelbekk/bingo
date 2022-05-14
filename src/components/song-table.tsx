@@ -1,45 +1,51 @@
 import {SongData} from "../helper-functios";
 import React from "react";
-
+import "./song-table.css"
 type Props = {
     songs: SongData[] | undefined,
-    updateScore: (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => void
+    updateScore: (index: number) => (mode: string) => (event: React.ChangeEvent<HTMLInputElement>) => void
 }
-type SongProps = {
-    title: string;
-    artist: string;
-    country: string;
-    score?: number;
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+type SongProps = SongData & {
+    onChange: (mode: string) => (event: React.ChangeEvent<HTMLInputElement>) => void
 }
-const Song = ({artist, country, score, title, onChange}: SongProps) => {
+const Song = ({artist, country, onChange, song, songScore, sceneScore, originalScore}: SongProps) => {
     return <tr>
-        <td>
-            {artist}
-        </td>
         <td>
             {country}
         </td>
         <td>
-            {title}
+            {artist}
         </td>
         <td>
-            <input value={score} onChange={onChange}/>
+            {song}
+        </td>
+        <td>
+            <input defaultValue={songScore} onBlur={onChange("song")} type={"number"} min={0} max={10} step={0.1}/>
+        </td>
+        <td>
+            <input defaultValue={sceneScore} onBlur={onChange("scene")}  type={"number"}  min={0} max={10} step={0.1}/>
+        </td>
+        <td>
+            <input defaultValue={originalScore} onBlur={onChange("original")}  type={"number"}  min={0} max={10} step={0.1}/>
         </td>
     </tr>
 }
 export const SongTable = ({songs, updateScore}: Props) => {
-    return <table className={"table"}>
+    return <div className={"song-table-container"}><table className={"table song-table"}>
         <thead>
+        <tr>
         <th>country</th>
         <th>artist</th>
         <th>song</th>
-        <th>score</th>
+        <th>song quality</th>
+        <th>show quality</th>
+        <th>originality</th>
+        </tr>
         </thead>
         <tbody>
 
-        {songs && songs.map(({artist, country, score, song}, index) =>
-         (<Song title={song} artist={artist} country={country} score={score} onChange={updateScore(index)}/>)
+        {songs && songs.map(({artist, country, song, songScore, sceneScore, originalScore}, index) =>
+         (<Song key={country} song={song} artist={artist} country={country} songScore={songScore} sceneScore={sceneScore} originalScore={originalScore} onChange={updateScore(index)}/>)
         )}
-        </tbody></table>
+        </tbody></table></div>
 }
