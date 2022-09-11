@@ -1,4 +1,6 @@
 .song-table-container {
     overflow-x: auto;
     width: 100%;
+    background-color: #ffffff90;
+    padding: 1rem
 }
