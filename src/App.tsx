@@ -83,7 +83,7 @@ function App() {
     return (
         <div className="app">
             <header className="header">
-                Eurovision Bingo & Score card
+                Melodi Grand Prix Bingo & Score card
             </header>
 
             <ButtonGroup>

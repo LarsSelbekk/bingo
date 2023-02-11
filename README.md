@@ -1,3 +1,3 @@
-# Eurovision bingo!
+# Melodi Grand Prix bingo!
 
-https://fossei.de/bingo
+https://static.barelars.no/bingo/
