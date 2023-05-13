@@ -1,3 +1,3 @@
 # Eurovision bingo!
 
-https://fossei.de/bingo
+https://static.barelars.no/bingo
